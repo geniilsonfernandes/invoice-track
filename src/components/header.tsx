@@ -37,11 +37,7 @@ export const Header = () => {
           aria-label="Main menu"
         >
           {menus.map((menu) => (
-            <Button
-              key={menu.name}
-              variant="ghost"
-              className="flex items-center space-x-1 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
-            >
+            <Button key={menu.name} variant="ghost" className="">
               <span>{menu.name}</span>
               {menu.submenu && <ChevronDown className="w-4 h-4" />}
             </Button>
