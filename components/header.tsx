@@ -1,7 +1,7 @@
+import { Logo } from "components/icons";
+import { Button } from 'components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import { Logo } from './icons';
-import { Button } from './ui/button';
 
 export const Header = () => {
 
@@ -49,7 +49,9 @@ export const Header = () => {
           <Button variant="outline" className="cursor-pointer">
             Log In
           </Button>
-          <Button className="cursor-pointer">Create a free account</Button>
+          <Link href="/account" passHref>
+            <Button className="cursor-pointer">Create a free account</Button>
+          </Link>
         </div>
       </div>
     </header>
