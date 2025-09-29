@@ -14,7 +14,7 @@ export const Header = () => {
 
 
   return (
-    <header className="bg-white ">
+    <header className="">
       <div className="container mx-auto lg:max-w-5xl flex items-center justify-between py-4 px-4 md:px-0">
         {/* Logo */}
         <div className="flex-1 flex items-center">

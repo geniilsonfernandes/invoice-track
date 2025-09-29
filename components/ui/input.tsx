@@ -111,14 +111,14 @@ export const Wrapper: React.FC<InputWrapperProps> = ({
   return (
     <div
       aria-label="form wrapper"
-      className={cn("relative group space-y-2", className)}
+      className={cn("relative group", className)}
       aria-errormessage={error ? `${id}-error` : undefined}
       {...(error ? { "aria-invalid": true } : {})}
       {...props}
     >
       <Label
         htmlFor={id}
-        className="block text-sm transition-colors group-focus-within:text-primary"
+        className="block text-sm transition-colors group-focus-within:text-primary mb-2"
       >
         {label}
       </Label>
