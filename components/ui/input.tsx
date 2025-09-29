@@ -18,10 +18,10 @@ const inputStyles = cva(
           "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:placeholder:indent-1",
       },
       withLeftSection: {
-        true: "pl-10",
+        true: "pl-11",
       },
       withRightSection: {
-        true: "pr-10",
+        true: "pr-11",
       },
     },
     defaultVariants: {
@@ -46,7 +46,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="relative flex items-center">
         {leftSection && (
-          <span className="absolute left-3 flex items-center pointer-events-none text-muted-foreground">
+          <span className="absolute left-2 flex items-center text-muted-foreground">
             {leftSection}
           </span>
         )}
@@ -66,7 +66,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {rightSection && (
-          <span className="absolute right-3 flex items-center pointer-events-none text-muted-foreground">
+          <span className="absolute right-2 flex items-center text-muted-foreground">
             {rightSection}
           </span>
         )}
@@ -121,7 +121,7 @@ const Wrapper: React.FC<InputWrapperProps> = ({
         {label}
       </Label>
       {description && (
-        <div className="text-xs text-muted-foreground ">{description}</div>
+        <div className="text-xs text-muted-foreground">{description}</div>
       )}
       {children}
       {error && <p className="text-xs text-red-500">{error}</p>}
