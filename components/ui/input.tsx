@@ -4,14 +4,14 @@ import * as React from "react";
 import { Label } from "./label";
 
 // Base de estilos do input
-const inputStyles = cva(
+const inputVariants = cva(
   "font-semibold placeholder:text-muted-foreground/50 selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-12 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base transition-all outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm leading-4 placeholder:indent-0 placeholder:transition-all placeholder:duration-300",
   {
     variants: {
       state: {
         default: "",
         invalid:
-          "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+          "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive aria-invalid:text-destructive",
       },
       focus: {
         default:
@@ -33,7 +33,7 @@ const inputStyles = cva(
 
 interface InputProps
   extends React.ComponentProps<"input">,
-    VariantProps<typeof inputStyles> {
+    VariantProps<typeof inputVariants> {
   leftSection?: React.ReactNode;
   rightSection?: React.ReactNode;
 }
@@ -55,7 +55,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           data-slot="input"
           className={cn(
-            inputStyles({
+            inputVariants({
               state,
               focus,
               withLeftSection: !!leftSection,
@@ -99,7 +99,7 @@ type InputWrapperProps = React.HTMLAttributes<HTMLDivElement> & {
  * </Input.Wrapper>
  * ```
  */
-const Wrapper: React.FC<InputWrapperProps> = ({
+export const Wrapper: React.FC<InputWrapperProps> = ({
   id,
   label,
   className,
@@ -112,6 +112,8 @@ const Wrapper: React.FC<InputWrapperProps> = ({
     <div
       aria-label="form wrapper"
       className={cn("relative group space-y-2", className)}
+      aria-errormessage={error ? `${id}-error` : undefined}
+      {...(error ? { "aria-invalid": true } : {})}
       {...props}
     >
       <Label
@@ -129,9 +131,6 @@ const Wrapper: React.FC<InputWrapperProps> = ({
   );
 };
 
-
-// Exportando como um namespace
-
 /**
  * Wrapper para o Input.
  *
@@ -146,6 +145,5 @@ const Wrapper: React.FC<InputWrapperProps> = ({
  * ```
  */
 const Input = Object.assign(InputBase, { Wrapper: Wrapper });
-
 
 export { Input };
