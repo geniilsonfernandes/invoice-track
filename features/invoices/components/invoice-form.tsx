@@ -1,12 +1,10 @@
 "use client";
 
-import { CalendarPicker } from "components/calendar-picker";
-import { ExampleCombobox, invoiceTypes } from "components/example-combobox";
+import { ExampleCombobox } from "components/example-combobox";
 import { LogoUpload } from "components/logo-upload";
 import { Button } from "components/ui/button";
 import { ButtonGroup, ButtonGroupText } from "components/ui/button-group";
-import { Card, CardContent } from "components/ui/card";
-import { Field, FieldContent, FieldLabel } from "components/ui/field";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
 import {
   InputGroup,
   InputGroupAddon,
@@ -25,7 +23,6 @@ import {
 import { Separator } from "components/ui/separator";
 import { Textarea } from "components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "components/ui/tooltip";
-import { H4 } from "components/ui/typography";
 import {
   Download,
   Eye,
@@ -33,9 +30,11 @@ import {
   InfoIcon,
   RefreshCcw,
   Send,
+  SlidersHorizontal,
   User,
 } from "lucide-react";
 import { useState } from "react";
+import { InvoiceTerms } from "./invoice-terms";
 
 const BilledTo = ({ className }: { className?: string }) => {
   return (
@@ -81,9 +80,6 @@ export const BillFrom = ({ className }: { className?: string }) => {
       <InputGroupTextarea
         id="bill-from"
         placeholder="Company Name, Address, Phone, Email"
-        defaultValue={
-          "My Company\n456 Business Rd.\nCity, State, ZIP\n(987) 654-3210\ninfo@mycompany.com"
-        }
       />
 
       <InputGroupAddon align="block-start">
@@ -118,63 +114,35 @@ export const BillFrom = ({ className }: { className?: string }) => {
 
 const InvoicePreferences = () => {
   return (
-    <div className="space-y-4">
-      <H4>Invoice Preferences</H4>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <SlidersHorizontal className="h-5 w-5 text-muted-foreground" />{" "}
+          Preferences
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div>
+          <Label htmlFor="currency" className="text-sm font-medium mb-2 block">
+            Currency
+          </Label>
 
-      <div>
-        <Label htmlFor="currency" className="text-sm font-medium mb-2 block">
-          Currency
-        </Label>
+          <Select>
+            <SelectTrigger id="currency" className="w-full">
+              <SelectValue placeholder="Select currency" />
+            </SelectTrigger>
 
-        <Select>
-          <SelectTrigger id="currency" className="w-full">
-            <SelectValue placeholder="Select currency" />
-          </SelectTrigger>
-
-          <SelectContent position="item-aligned">
-            <SelectItem value="USD">🇺🇸 USD – United States Dollar</SelectItem>
-            <SelectItem value="EUR">🇪🇺 EUR – Euro</SelectItem>
-            <SelectItem value="GBP">🇬🇧 GBP – British Pound</SelectItem>
-            <SelectItem value="BRL">🇧🇷 BRL – Brazilian Real</SelectItem>
-            <SelectItem value="JPY">🇯🇵 JPY – Japanese Yen</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
-  );
-};
-
-const BasicDetails = () => {
-  return (
-    <div className="space-y-2">
-      <Field orientation="vertical">
-        <FieldContent>
-          <FieldLabel htmlFor="payment-terms">Payment Terms</FieldLabel>
-        </FieldContent>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Select payment terms" />
-          </SelectTrigger>
-          <SelectContent position="item-aligned">
-            <SelectItem value="net-15">Net 15</SelectItem>
-            <SelectItem value="net-30">Net 30</SelectItem>
-            <SelectItem value="due-on-receipt">Due on Receipt</SelectItem>
-          </SelectContent>
-        </Select>
-      </Field>
-      <CalendarPicker
-        id="invoice-date-picker"
-        name="invoice-date-picker"
-        placeholder="Select invoice date"
-        label="Invoice Date"
-      />
-      <CalendarPicker
-        id="due-date-picker"
-        name="due-date-picker"
-        placeholder="Select due date"
-        label="Invoice Due Date"
-      />
-    </div>
+            <SelectContent position="item-aligned">
+              <SelectItem value="USD">🇺🇸 USD – United States Dollar</SelectItem>
+              <SelectItem value="EUR">🇪🇺 EUR – Euro</SelectItem>
+              <SelectItem value="GBP">🇬🇧 GBP – British Pound</SelectItem>
+              <SelectItem value="BRL">🇧🇷 BRL – Brazilian Real</SelectItem>
+              <SelectItem value="JPY">🇯🇵 JPY – Japanese Yen</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -218,23 +186,25 @@ const InvoiceNumber = () => {
 
 const InvoiceActions = () => {
   return (
-    <div className="w-full space-y-2">
-      <Button className="flex-1 w-full">
-        <Send className="mr-2 h-4 w-4" />
-        Send Invoice
-      </Button>
+    <Card>
+      <CardContent className="flex flex-col gap-2">
+        <Button className="flex-1 w-full">
+          <Send className="mr-2 h-4 w-4" />
+          Send Invoice
+        </Button>
 
-      <div className="flex w-full gap-2 ">
-        <Button variant="outline" className="flex-1">
-          <Eye className="mr-2 h-4 w-4" />
-          Preview
-        </Button>
-        <Button variant="outline" className="flex-1">
-          <Download className="mr-2 h-4 w-4" />
-          Download
-        </Button>
-      </div>
-    </div>
+        <div className="flex w-full gap-2 ">
+          <Button variant="outline" className="flex-1">
+            <Eye className="mr-2 h-4 w-4" />
+            Preview
+          </Button>
+          <Button variant="outline" className="flex-1">
+            <Download className="mr-2 h-4 w-4" />
+            Download
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -255,19 +225,13 @@ export const InvoiceForm = () => {
             {/* Invoice Number */}
 
             <InvoiceNumber />
-
-            {/* Invoice Type */}
-            <ExampleCombobox
-              id="invoice-type"
-              label="Invoice Type"
-              placeholder="Select Invoice Type"
-              data={invoiceTypes}
-            />
           </div>
 
-          <BillFrom className="col-span-12" />
-          <BilledTo className="col-span-12" />
-          <Separator className="col-span-12 my-4" />
+          <BillFrom className="col-span-6" />
+          <BilledTo className="col-span-6" />
+          <InvoiceTerms className="col-span-12" />
+
+          <Separator className="col-span-12" />
 
           <div className="col-span-12"> items</div>
 
@@ -287,21 +251,12 @@ export const InvoiceForm = () => {
           </div>
         </Card>
         <div
-          className="gap-2 space-y-4  min-w-xs  rounded-xl flex flex-col h-fit  sticky top-8 self-start"
+          className="gap-2 space-y-2  min-w-xs  rounded-xl flex flex-col h-fit  sticky top-8 self-start"
           aria-label="form actions"
         >
-          <Card>
-            <CardContent>
-              <InvoicePreferences />
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <BasicDetails />
-              <Separator className="my-4" />
-              <InvoiceActions />
-            </CardContent>
-          </Card>
+          <InvoicePreferences />
+
+          <InvoiceActions />
         </div>
       </div>
     </>
