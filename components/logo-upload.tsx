@@ -122,7 +122,7 @@ const Dropzone = () => {
         <Slider className="mt-4" defaultValue={[25]} min={20} max={80} />
       </div>
 
-      <Button size="lg" fullWidth disabled={!file}>
+      <Button size="lg" disabled={!file}>
         Save changes
       </Button>
     </div>
@@ -154,7 +154,7 @@ const UploadDialog: React.FC<DialogProps> = ({ children }) => {
 export const LogoUpload = () => {
   return (
     <UploadDialog>
-      <div className="w-full">
+      <div className="w-full max-w-52">
         <div className="h-24 w-full border-2 gap-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer hover:border-primary/50 hover:bg-primary/10 transition-colors text-muted-foreground">
           <ImageUp />
           <p className="text-sm font-bold ">Upload Logo</p>

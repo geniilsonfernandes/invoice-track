@@ -17,11 +17,11 @@ const ActionIcon: React.FC<ActionIconProps> = ({
   return (
     <Comp
       data-slot="button"
-      className={cn("size-8 flex items-center justify-center p-1 border rounded-md hover:bg-secondary/50 transition-colors disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+      className={cn(
+        "size-8 flex items-center justify-center p-1 border rounded-md hover:bg-secondary/50 transition-colors disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",
         "cursor-pointer",
         "active:translate-y-0.5",
         className
-
       )}
       {...props}
     >

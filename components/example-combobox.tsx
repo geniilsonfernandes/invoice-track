@@ -1,6 +1,21 @@
 "use client";
 
-import { BanknoteArrowUp, CheckIcon, ChevronsDownUp, ChevronsUpDownIcon } from "lucide-react";
+import {
+  CalendarCheck,
+  CalendarClock,
+  CalendarDays,
+  CalendarPlus,
+  CalendarRange,
+  CalendarSearch,
+  CheckIcon,
+  ChevronsDownUp,
+  ChevronsUpDownIcon,
+  Clock,
+  MessageSquareQuote,
+  PencilLine,
+  Receipt,
+  ScrollText,
+} from "lucide-react";
 import * as React from "react";
 
 import { Button } from "components/ui/button";
@@ -10,24 +25,77 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList
+  CommandList,
 } from "components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "components/ui/popover";
 import { Label } from "./ui/label";
 
-const invoiceTypes = [
-  { label: "Standard Invoice", value: "standard", icon: <BanknoteArrowUp /> },
-  { label: "Proforma Invoice", value: "proforma", icon: <BanknoteArrowUp /> },
+export const invoiceTypes = [
   {
     label: "Commercial Invoice",
     value: "commercial",
-    icon: <BanknoteArrowUp />,
+    icon: <Receipt />,
   },
-  { label: "Credit Invoice", value: "credit", icon: <BanknoteArrowUp /> },
-  { label: "Debit Invoice", value: "debit", icon: <BanknoteArrowUp /> },
+  { label: "Quote", value: "credit", icon: <MessageSquareQuote /> },
+  { label: "Estimate", value: "debit", icon: <ScrollText /> },
 ];
 
-export function ExampleCombobox() {
+export const paymentTerms = [
+  {
+    label: "Due on Receipt",
+    value: "due_on_receipt",
+    icon: <Clock />,
+  },
+  {
+    label: "Net 7",
+    value: "net_7",
+    icon: <CalendarDays />,
+  },
+  {
+    label: "Net 15",
+    value: "net_15",
+    icon: <CalendarClock />,
+  },
+  {
+    label: "Net 30",
+    value: "net_30",
+    icon: <CalendarRange />,
+  },
+  {
+    label: "Net 60",
+    value: "net_60",
+    icon: <CalendarCheck />,
+  },
+  {
+    label: "Net 90",
+    value: "net_90",
+    icon: <CalendarPlus />,
+  },
+  {
+    label: "EOM (End of Month)",
+    value: "eom",
+    icon: <CalendarSearch />,
+  },
+  {
+    label: "Custom Terms",
+    value: "custom",
+    icon: <PencilLine />,
+  },
+];
+
+type ExampleComboboxProps = {
+  label?: string;
+  data?: typeof invoiceTypes;
+  placeholder?: string;
+  id?: string;
+};
+
+export function ExampleCombobox({
+  label,
+  data = invoiceTypes,
+  id,
+  placeholder = "Select Invoice Type",
+}: ExampleComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -37,28 +105,30 @@ export function ExampleCombobox() {
     <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
   );
 
-  const selectedType = invoiceTypes.find((type) => type.value === value);
+  const selectedType = data.find((type) => type.value === value);
 
   return (
-    <div className="mt-8">
-      <Label htmlFor="framework" className="mb-2 block text-sm">
-        Invoice Type
+    <>
+      <Label htmlFor={id} className=" block text-sm">
+        {label || "Invoice Type"}
       </Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            id="framework"
+            id={id}
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full h-12 justify-between border-input border-1 shadow-none font-semibold"
+            className="w-full h-10 justify-between border-input border-1 shadow-none font-semibold"
           >
-            {value
-              ? <div className="flex items-center gap-2">
-              {selectedType?.icon}
-              {selectedType?.label}
+            {value ? (
+              <div className="flex items-center gap-2">
+                {selectedType?.icon}
+                {selectedType?.label}
               </div>
-              : "Select Invoice Type"}
+            ) : (
+              "Select Invoice Type"
+            )}
 
             {triggerIcon}
           </Button>
@@ -68,19 +138,18 @@ export function ExampleCombobox() {
           className="w-(--radix-popover-trigger-width) p-0"
         >
           <Command>
-            <CommandInput placeholder="Search invoice type" />
+            <CommandInput placeholder={placeholder} />
             <CommandList>
-              <CommandEmpty>no results found</CommandEmpty>
+              <CommandEmpty>No results found</CommandEmpty>
               <CommandGroup>
-                {invoiceTypes.map((type) => (
+                {data.map((type) => (
                   <CommandItem
                     key={type.value}
                     value={type.value}
                     onSelect={(currentValue) => {
                       setValue(currentValue === value ? "" : currentValue);
-                      setOpen(false);
+                      // setOpen(false);
                     }}
-                   
                   >
                     {type.icon}
                     {type.label}
@@ -94,6 +163,6 @@ export function ExampleCombobox() {
           </Command>
         </PopoverContent>
       </Popover>
-    </div>
+    </>
   );
 }
