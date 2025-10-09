@@ -1,9 +1,9 @@
 import { ButtonGroup, ButtonGroupText } from "components/ui/button-group";
 import {
-    Field,
-    FieldContent,
-    FieldError,
-    FieldLabel
+  Field,
+  FieldContent,
+  FieldError,
+  FieldLabel,
 } from "components/ui/field";
 import {
     InputGroup,
@@ -14,29 +14,29 @@ import {
 import { Label } from "components/ui/label";
 import { RefreshCcw } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Invoice as InvoiceFormValues } from "../schemas/invoiceSchema";
+import {
+  Invoice as InvoiceFormValues,
+  InvoiceKeysEnum,
+} from "../schemas/invoiceSchema";
 
+type InvoiceNumberProps = React.ComponentPropsWithoutRef<"div">;
 
-
-
-export const InvoiceNumber = ({ className }: { className?: string }) => {
-  const { control, setValue, getFieldState } =
-    useFormContext<InvoiceFormValues>();
-
-  
-
+export const InvoiceNumber: React.FC<InvoiceNumberProps> = (props) => {
+  const { control, setValue } = useFormContext<InvoiceFormValues>();
 
   function generateInvoiceNumber() {
     const randomNum = Math.floor(100000 + Math.random() * 9000);
-    setValue("invoiceNumber", `${randomNum}`, { shouldValidate: true });
+    setValue(InvoiceKeysEnum.InvoiceNumber, `${randomNum}`, {
+      shouldValidate: true,
+    });
   }
   return (
     <Controller
       control={control}
-      name="invoiceNumber"
+      name={InvoiceKeysEnum.InvoiceNumber}
       render={({ field, fieldState }) => (
-        <div className={className}>
-          <Field orientation="vertical" className="col-span-4">
+        <div {...props}>
+          <Field orientation="vertical">
             <FieldContent>
               <FieldLabel htmlFor="invoice-number">Invoice Number</FieldLabel>
             </FieldContent>
@@ -69,7 +69,11 @@ export const InvoiceNumber = ({ className }: { className?: string }) => {
               Select the payment terms for the invoice. Choose None, Net 7, Net
               15, Net 30, Net 60, Due on Receipt or Custom.
             </p>
-            <FieldError id="invoice-number-error" aria-describedby="invoice-number-error">
+
+            <FieldError
+              id="invoice-number-error"
+              aria-describedby="invoice-number-error"
+            >
               {fieldState.error?.message}
             </FieldError>
           </Field>
