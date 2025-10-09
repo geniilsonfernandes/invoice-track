@@ -6,10 +6,10 @@ import {
   FieldLabel,
 } from "components/ui/field";
 import {
-    InputGroup,
-    InputGroupAddon,
-    InputGroupButton,
-    InputGroupInput,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
 } from "components/ui/input-group";
 import { Label } from "components/ui/label";
 import { RefreshCcw } from "lucide-react";
@@ -51,6 +51,9 @@ export const InvoiceNumber: React.FC<InvoiceNumberProps> = (props) => {
                   placeholder="Invoice #"
                   {...field}
                   aria-invalid={!!fieldState.error}
+                  aria-describedby={
+                    fieldState.error ? "invoice-number-error" : undefined
+                  }
                 />
 
                 <InputGroupAddon align="inline-end">
@@ -70,10 +73,7 @@ export const InvoiceNumber: React.FC<InvoiceNumberProps> = (props) => {
               15, Net 30, Net 60, Due on Receipt or Custom.
             </p>
 
-            <FieldError
-              id="invoice-number-error"
-              aria-describedby="invoice-number-error"
-            >
+            <FieldError id="invoice-number-error">
               {fieldState.error?.message}
             </FieldError>
           </Field>
