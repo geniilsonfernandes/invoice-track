@@ -6,6 +6,10 @@ export const InvoiceSchema = z.object({
   recipient: z.string().min(1, "Recipient is required"),
   invoiceNumber: z.string().min(1, "Invoice number is required"),
   currency: z.string().min(1, "Currency is required"),
+  paymentTerms: z.string().min(1, "Terms is required"),
+  invoiceDate: z.date(),
+  /// due date to be after invoice date
+  dueDate: z.date().min(new Date(), "Due date must be after invoice date"),
 });
 
 // 💡 Type automatically inferred from the schema
@@ -17,4 +21,7 @@ export enum InvoiceKeysEnum {
   Recipient = "recipient",
   InvoiceNumber = "invoiceNumber",
   Currency = "currency",
+  PaymentTerms = "paymentTerms",
+  InvoiceDate = "invoiceDate",
+  DueDate = "dueDate",
 }
