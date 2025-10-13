@@ -155,7 +155,7 @@ export const InvoiceTerms: React.FC<InvoiceTermsProps> = ({
           {[PAYMENT_TERMS.NONE, PAYMENT_TERMS.DUE_ON_RECEIPT].includes(
             termsWatch
           ) !== true && (
-            <motion.p
+            <motion.div
               key="due-date-picker"
               className="col-span-4"
               initial={{ opacity: 0, y: -10 }}
@@ -180,7 +180,7 @@ export const InvoiceTerms: React.FC<InvoiceTermsProps> = ({
                   />
                 )}
               />
-            </motion.p>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
