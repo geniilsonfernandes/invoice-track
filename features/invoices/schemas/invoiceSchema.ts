@@ -1,16 +1,28 @@
 import { z } from "zod";
+import { PAYMENT_TERMS } from "../constants";
 
 // 🧩 Validation schema
-export const InvoiceSchema = z.object({
-  sender: z.string().min(1, "Sender is required"),
-  recipient: z.string().min(1, "Recipient is required"),
-  invoiceNumber: z.string().min(1, "Invoice number is required"),
-  currency: z.string().min(1, "Currency is required"),
-  paymentTerms: z.string().min(1, "Terms is required"),
-  invoiceDate: z.date(),
-  /// due date to be after invoice date
-  dueDate: z.date().min(new Date(), "Due date must be after invoice date"),
-});
+
+export const InvoiceSchema = z
+  .object({
+    sender: z.string().min(1, "Sender is required"),
+    recipient: z.string().min(1, "Recipient is required"),
+    invoiceNumber: z.string().min(1, "Invoice number is required"),
+    currency: z.string().min(1, "Currency is required"),
+    paymentTerms: z.enum(PAYMENT_TERMS),
+    invoiceDate: z.date(),
+    dueDate: z.date(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.dueDate < data.invoiceDate) {
+      ctx.addIssue({
+        path: ["dueDate"], // indica que o erro é do dueDate
+        message: "Due date must be after invoice date",
+        code: "custom",
+      });
+    }
+  });
+
 
 // 💡 Type automatically inferred from the schema
 export type Invoice = z.infer<typeof InvoiceSchema>;

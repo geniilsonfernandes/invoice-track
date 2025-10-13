@@ -1,39 +1,103 @@
 "use client";
 
 import { CalendarPicker } from "components/calendar-picker";
-import { Field, FieldContent, FieldLabel } from "components/ui/field";
-import { InputGroupButton } from "components/ui/input-group";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "components/ui/select";
-import { Tooltip, TooltipContent, TooltipTrigger } from "components/ui/tooltip";
-import { H4 } from "components/ui/typography";
+import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { cn } from "lib/utils";
-import { FileText, InfoIcon } from "lucide-react";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
-import {
-  Invoice as InvoiceFormValues,
-  InvoiceKeysEnum,
-} from "../schemas/invoiceSchema";
+import { ArrowRight, Calendar, FileText } from "lucide-react";
+import { useEffect } from "react";
+import { Controller, useWatch } from "react-hook-form";
+import { PAYMENT_TERMS, PAYMENT_TERMS_DAYS } from "../constants";
+import { useInvoiceFormContext } from "../hooks/use-invoice-form";
+import { InvoiceKeysEnum } from "../schemas/invoiceSchema";
+import { PaymentTermsSelect } from "./paymen-terms-select";
+import { SectionHeader } from "./section-header";
 
 type InvoiceTermsProps = React.HTMLAttributes<HTMLDivElement> & {};
+
+type AnimatedPresenceWrapperProps = {
+  /** Define se o conteúdo deve ser exibido */
+  show: boolean;
+  /** Conteúdo interno */
+  children: React.ReactNode;
+  /** Key opcional para o elemento animado */
+  motionKey?: string;
+  /** Classe opcional */
+  className?: string;
+  /** Permite customizar a animação */
+  animation?: MotionProps;
+};
+
+export function AnimatedPresenceWrapper({
+  show,
+  children,
+  motionKey,
+  className,
+  animation,
+}: AnimatedPresenceWrapperProps) {
+  const defaultAnimation: MotionProps = {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 },
+    transition: { duration: 0.3 },
+  };
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          key={motionKey ?? "animated-wrapper"}
+          className={className}
+          {...(animation ?? defaultAnimation)}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 export const InvoiceTerms: React.FC<InvoiceTermsProps> = ({
   className,
   ...props
 }) => {
-  const { control } = useFormContext<InvoiceFormValues>();
+  const { control, setValue } = useInvoiceFormContext();
+
+  const termsWatch = useWatch({
+    control,
+    name: InvoiceKeysEnum.PaymentTerms,
+  });
 
   const invoiceDateWatch = useWatch({
     control,
     name: InvoiceKeysEnum.InvoiceDate,
   });
+
+  const dueDateWatch = useWatch({
+    control,
+    name: InvoiceKeysEnum.DueDate,
+  });
+
+  useEffect(() => {
+    const daysToAdd = PAYMENT_TERMS_DAYS[termsWatch];
+
+    if (daysToAdd == null || !invoiceDateWatch) return;
+
+    const dueDate = new Date(invoiceDateWatch);
+    dueDate.setDate(dueDate.getDate() + daysToAdd);
+
+    setValue(InvoiceKeysEnum.DueDate, dueDate, {
+      shouldValidate: true,
+    });
+  }, [termsWatch, invoiceDateWatch, setValue]);
+
+  // TODO: implementes terms, ex: select net 7, add days to due date, ex: none, remove due date,
+  // add terms options in constant file
+
+  function diffInDays(start: Date, end: Date) {
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const diff = end.getTime() - start.getTime();
+    return Math.ceil(diff / msPerDay); // arredonda para cima
+  }
 
   return (
     <div
@@ -42,34 +106,17 @@ export const InvoiceTerms: React.FC<InvoiceTermsProps> = ({
       aria-labelledby="invoice-terms-title"
       {...props}
     >
-      <div className="flex items-center">
-        <H4 className="flex items-center gap-2" id="invoice-terms-title">
+      <SectionHeader
+        icon={
           <FileText
             className="h-5 w-5 text-muted-foreground"
             aria-hidden="true"
           />
-          Invoice Terms
-        </H4>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <InputGroupButton
-              variant="ghost"
-              aria-label="Help"
-              className="ml-auto rounded-full"
-              size="icon-xs"
-            >
-              <InfoIcon />
-            </InputGroupButton>
-          </TooltipTrigger>
-
-          <TooltipContent role="tooltip" aria-live="polite">
-            <p>
-              This is the invoice terms section. You can add any information
-              here.
-            </p>
-          </TooltipContent>
-        </Tooltip>
-      </div>
+        }
+        title="Invoice Terms"
+        tooltip="This is the invoice terms section. You can add any information here."
+        id="invoice-terms-title"
+      />
 
       <div className="col-span-12 grid grid-cols-12 gap-4">
         {/* Payment Terms */}
@@ -77,38 +124,11 @@ export const InvoiceTerms: React.FC<InvoiceTermsProps> = ({
           control={control}
           name={InvoiceKeysEnum.PaymentTerms}
           render={({ field }) => (
-            <Field orientation="vertical" className="col-span-4">
-              <FieldContent>
-                <FieldLabel htmlFor="payment-terms">Payment Terms</FieldLabel>
-              </FieldContent>
-              <Select
-                aria-label="Payment Terms"
-                value={field.value}
-                onValueChange={field.onChange}
-              >
-                <SelectTrigger aria-describedby="payment-terms-desc">
-                  <SelectValue placeholder="Select payment terms" />
-                </SelectTrigger>
-                <SelectContent position="item-aligned">
-                  <SelectGroup>
-                    <SelectLabel>Payment Terms</SelectLabel>
-                    <SelectItem value="none">None</SelectItem>
-                    <SelectItem value="net-7">Net 7</SelectItem>
-                    <SelectItem value="net-15">Net 15</SelectItem>
-                    <SelectItem value="net-30">Net 30</SelectItem>
-                    <SelectItem value="net-60">Net 60</SelectItem>
-                    <SelectItem value="due-on-receipt">
-                      Due on Receipt
-                    </SelectItem>
-                    <SelectItem value="custom">Custom</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <p id="payment-terms-desc" className="sr-only">
-                Select the payment terms for the invoice. Choose None, Net 7,
-                Net 15, Net 30, Net 60, Due on Receipt or Custom.
-              </p>
-            </Field>
+            <PaymentTermsSelect
+              {...field}
+              aria-label="Payment Terms"
+              className="col-span-4"
+            />
           )}
         />
 
@@ -117,39 +137,79 @@ export const InvoiceTerms: React.FC<InvoiceTermsProps> = ({
           control={control}
           name={InvoiceKeysEnum.InvoiceDate}
           render={({ field, fieldState }) => (
-            <div className="col-span-4">
-              <CalendarPicker
-                id="invoice-date-picker"
-                placeholder="Select invoice date"
-                label="Invoice Date"
-                aria-label="Invoice Date"
-                date={field.value}
-                onChange={field.onChange}
-                fieldState={fieldState}
-              />
-            </div>
+            <CalendarPicker
+              id="invoice-date-picker"
+              placeholder="Select invoice date"
+              label="Invoice Date"
+              aria-label="Invoice Date"
+              date={field.value}
+              onChange={field.onChange}
+              fieldState={fieldState}
+              className="col-span-4"
+            />
           )}
         />
 
-        <Controller
-          control={control}
-          name={InvoiceKeysEnum.DueDate}
-          render={({ field, fieldState }) => (
-            <div className="col-span-4">
-              <CalendarPicker
-                id="due-date-picker"
-                placeholder="Select due date"
-                label="Invoice Due Date"
-                aria-label="Invoice Due Date"
-                date={field.value}
-                onChange={field.onChange}
-                fieldState={fieldState}
-                disabled={{ before: invoiceDateWatch }}
+        {/* Due Date */}
+        <AnimatePresence>
+          {[PAYMENT_TERMS.NONE, PAYMENT_TERMS.DUE_ON_RECEIPT].includes(
+            termsWatch
+          ) !== true && (
+            <motion.p
+              key="due-date-picker"
+              className="col-span-4"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Controller
+                control={control}
+                name={InvoiceKeysEnum.DueDate}
+                render={({ field, fieldState }) => (
+                  <CalendarPicker
+                    id="due-date-picker"
+                    placeholder="Select due date"
+                    label="Invoice Due Date"
+                    aria-label="Invoice Due Date"
+                    date={field.value}
+                    onChange={field.onChange}
+                    fieldState={fieldState}
+                    disabled={{ before: invoiceDateWatch }}
+                    className="col-span-4"
+                  />
+                )}
               />
-            </div>
+            </motion.p>
           )}
-        />
+        </AnimatePresence>
       </div>
+
+      {/* Custom Dates */}
+      <AnimatePresence>
+        {termsWatch === PAYMENT_TERMS.CUSTOM &&
+          dueDateWatch &&
+          invoiceDateWatch && (
+            <motion.p
+              key="custom-dates"
+              className="text-sm text-muted-foreground [&_svg]:size-4 flex items-center gap-2"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Calendar />
+              Invoice Date: {invoiceDateWatch.toLocaleDateString()}
+              <ArrowRight />
+              Due in {dueDateWatch.toLocaleDateString()} (
+              {diffInDays(invoiceDateWatch, dueDateWatch)}{" "}
+              {diffInDays(invoiceDateWatch, dueDateWatch) === 1
+                ? "day"
+                : "days"}
+              )
+            </motion.p>
+          )}
+      </AnimatePresence>
     </div>
   );
 };
