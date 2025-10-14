@@ -1,12 +1,8 @@
 "use client";
 
 import { InputGroupButton } from "components/ui/input-group";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "components/ui/tooltip";
-import { H4 } from "components/ui/typography";
+import { Tooltip, TooltipContent, TooltipTrigger } from "components/ui/tooltip";
+import { H5 } from "components/ui/typography";
 import { InfoIcon } from "lucide-react";
 
 type SectionHeaderProps = {
@@ -28,10 +24,13 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className="flex items-center">
-      <H4 className="flex items-center gap-2" id={id}>
+      <H5
+        className="flex items-center gap-2 [&>svg]:size-4 [&_svg]:text-muted-foreground"
+        id={id}
+      >
         {icon}
         {title}
-      </H4>
+      </H5>
 
       {tooltip && (
         <Tooltip>

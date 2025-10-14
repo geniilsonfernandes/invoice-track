@@ -27,6 +27,16 @@ export const H4: React.FC<TypographyProps> = ({ className, ...props }) => (
   <h4 className={cn("text-base font-medium", className)} {...props} />
 );
 
+export const H5: React.FC<TypographyProps> = ({ className, ...props }) => (
+  <h5 className={cn("text-sm font-medium", className)} {...props} />
+);
+
 export const P: React.FC<ParagraphProps> = ({ className, ...props }) => (
   <p className={cn("text-sm text-muted-foreground", className)} {...props} />
 );
+
+
+/// typography.page
+/// typography.body
+/// typography.bodySmall
+/// typography.bodyLarge

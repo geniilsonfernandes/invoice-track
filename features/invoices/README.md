@@ -14,21 +14,3 @@ src/
         ├── tests/            # Testes unitários e de integração da feature
         ├── index.ts          # Barrel export (exporta tudo o que a feature oferece)
         └── README.md         # (opcional) explicação rápida da feature
-
-
-
-         // learn about describedby: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby
-
-  // ✅ Principais melhorias de acessibilidade
-  // 1.	Input associado ao erro:
-  // •	aria-invalid={!!fieldState.error}
-  // •	aria-describedby={fieldState.error ? "sender-error" : undefined}
-  // 2.	Erro acessível:
-  // •	FieldError com id="sender-error"
-  // •	Mensagem anunciada por leitores de tela automaticamente
-  // 3.	Tooltip acessível:
-  // •	role="tooltip" no conteúdo
-  // •	aria-live="polite" para que leitores de tela anunciem quando abrir
-  // 4.	Label corretamente associado:
-  // •	Label htmlFor="sender" garantindo que o input seja anunciado corretamente
-  // 5.	Estrutura limpa e sem duplicação de props, mantendo compatibilidade com react-hook-form e componentes UI reutilizáveis
