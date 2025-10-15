@@ -12,6 +12,18 @@ export const InvoiceSchema = z
     paymentTerms: z.enum(PAYMENT_TERMS),
     invoiceDate: z.date(),
     dueDate: z.date(),
+
+    // items
+    items: z.array(
+      z.object({
+        name: z.string().min(1, "Item name is required"),
+        quantity: z.number().min(0, "Item quantity is required"),
+        price: z.number().min(0, "Item price is required"),
+      })
+    ),
+
+    //
+    notes: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.dueDate < data.invoiceDate) {
@@ -22,7 +34,6 @@ export const InvoiceSchema = z
       });
     }
   });
-
 
 // 💡 Type automatically inferred from the schema
 export type Invoice = z.infer<typeof InvoiceSchema>;
@@ -36,4 +47,6 @@ export enum InvoiceKeysEnum {
   PaymentTerms = "paymentTerms",
   InvoiceDate = "invoiceDate",
   DueDate = "dueDate",
+  Items = "items",
+  Notes = "notes",
 }

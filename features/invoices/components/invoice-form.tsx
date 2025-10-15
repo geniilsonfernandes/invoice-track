@@ -3,8 +3,6 @@
 import { LogoUpload } from "components/logo-upload";
 import { Button } from "components/ui/button";
 import { Card, CardContent } from "components/ui/card";
-import { Label } from "components/ui/label";
-import { Textarea } from "components/ui/textarea";
 import { Download, Eye, Send } from "lucide-react";
 import { InvoiceTerms } from "./invoice-terms";
 
@@ -16,6 +14,7 @@ import { Invoice as InvoiceFormValues } from "../schemas/invoiceSchema";
 import { InvoiceItemsTable } from "./invoice-items-table";
 import { InvoiceNumber } from "./invoice-number";
 import { InvoicePreferences } from "./invoice-preferences";
+import { Notes } from "./notes";
 import { Recipient } from "./recipient";
 import { Sender } from "./sender";
 
@@ -60,7 +59,9 @@ export const InvoiceForm = () => {
   const methods = useInvoiceForm();
 
   const onSubmit = (data: InvoiceFormValues) => {
-    // aqui 'idade' já virá como number | undefined e 'email' em lowercase (por causa do transform)
+    // todo: quando for no dash ter opcao de mais detaljes na tebale de items, buscar por id, colcoar dettales e etc,
+    // a logo é recurso apenas para pro
+    // ajsuta o input de currenct e input de numero, ver se consigo colocar controls nele
     console.log("Dados válidos:", data);
   };
   return (
@@ -68,10 +69,10 @@ export const InvoiceForm = () => {
       <div className={cn("bg-card h-24 flex border-b border-accent")}></div>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="flex gap-4   my-4 container mx-auto lg:max-w-6xl -mt-20"
+        className="flex gap-6 my-4 container mx-auto lg:max-w-7xl -mt-20"
       >
         <Card
-          className="grid grid-cols-12 gap-4 flex-1 p-6"
+          className="grid grid-cols-12 gap-6 flex-1 p-6"
           aria-label="invoice form"
         >
           <div className="flex flex-col gap-2 col-span-6">
@@ -85,20 +86,10 @@ export const InvoiceForm = () => {
           <InvoiceTerms className="col-span-12" />
           <Separator className="col-span-12" />
           <InvoiceItemsTable />
-          <div className="col-span-12">invoices options</div>
-          <div className="col-span-12">
-            <Label htmlFor="notes" className="mb-2">
-              Notes
-            </Label>
-            <Textarea
-              id="notes"
-              placeholder="Additional notes or terms"
-              rows={4}
-            />
-          </div>
+          <Notes className="col-span-12" />
         </Card>
         <div
-          className="gap-2 space-y-2  min-w-xs  rounded-xl flex flex-col h-fit  sticky top-8 self-start"
+          className="gap-2 space-y-2 max-w-xs rounded-xl flex flex-col h-fit  sticky top-8 self-start md:hidden lg:flex"
           aria-label="form actions"
         >
           <InvoicePreferences />
