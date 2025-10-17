@@ -1,42 +1,36 @@
-import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
+import Features from "components/home/features";
+import Footer from "components/home/footer";
+import { Button } from "components/ui/button";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "components/ui/input-group";
 import { InvoiceForm } from "features/invoices/components/invoice-form";
 import { Header } from "../components/header";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Header />
-      <div className="bg-card flex items-center justify-center py-8">
-        <div className="border border-input p-2 rounded-full flex gap-4 items-center hover:border-primary">
-          <div className="*:data-[slot=avatar]:ring-background bg-card inline-flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale *:data-[slot=avatar]:size-6 ">
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage
-                src="https://github.com/maxleiter.png"
-                alt="@maxleiter"
-              />
-              <AvatarFallback>LR</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage
-                src="https://github.com/evilrabbit.png"
-                alt="@evilrabbit"
-              />
-              <AvatarFallback>ER</AvatarFallback>
-            </Avatar>
-          </div>
-
-          <p className="text-sm text-muted-foreground pr-1">
-            <span className="font-bold text-primary">2,000+</span> invoices
-            created so far
-          </p>
+    <main className="relative">
+      <div className="container pb-4 ">
+        <Header />
+        <div className="max-w-40">
+          <h1 className="text-lg text-center font-bold mt-8">
+            Do More With Invoice Maker
+          </h1>
+          <InputGroup className="h-12">
+            <InputGroupInput placeholder="Type to search..." />
+            <InputGroupAddon align="inline-end">
+              <Button>Search</Button>
+            </InputGroupAddon>
+          </InputGroup>
         </div>
+        <InvoiceForm />
       </div>
 
-      <InvoiceForm />
+      <Features />
+
+      <Footer />
     </main>
   );
 }

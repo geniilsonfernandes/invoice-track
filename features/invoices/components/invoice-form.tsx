@@ -7,7 +7,6 @@ import { Download, Eye, Send } from "lucide-react";
 import { InvoiceTerms } from "./invoice-terms";
 
 import { Separator } from "components/ui/separator";
-import { cn } from "lib/utils";
 import { useFormContext } from "react-hook-form";
 import { InvoiceFormProvider, useInvoiceForm } from "../hooks/use-invoice-form";
 import { Invoice as InvoiceFormValues } from "../schemas/invoiceSchema";
@@ -20,6 +19,33 @@ import { Sender } from "./sender";
 
 const InvoiceActions = () => {
   const { formState } = useFormContext<InvoiceFormValues>();
+
+  const isHome = true;
+
+  if (isHome) {
+    return (
+      <Card>
+        <CardContent className="flex flex-col gap-2">
+          <Button
+            className=""
+            size="lg"
+            type="submit"
+            disabled={!formState.isValid}
+            aria-disabled={!formState.isValid}
+          >
+            <Download /> Download
+          </Button>
+
+          <div className="flex w-full gap-2 ">
+            <Button variant="secondary" className="flex-1">
+              <Eye />
+              Preview
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>
@@ -64,37 +90,34 @@ export const InvoiceForm = () => {
     // ajsuta o input de currenct e input de numero, ver se consigo colocar controls nele
     console.log("Dados válidos:", data);
   };
+
   return (
     <InvoiceFormProvider {...methods}>
-      <div className={cn("bg-card h-24 flex border-b border-accent")}></div>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className="flex gap-6 my-4 container mx-auto lg:max-w-7xl -mt-20"
-      >
-        <Card
-          className="grid grid-cols-12 gap-6 flex-1 p-6"
-          aria-label="invoice form"
-        >
-          <div className="flex flex-col gap-2 col-span-6">
-            {/* Logo Upload */}
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-2">
+        <div className="flex w-full gap-4 rounded-xl ">
+          <div
+            className="grid grid-cols-12 gap-6 flex-1 border rounded-xl p-4 bg-card"
+            aria-label="invoice form"
+          >
             <LogoUpload />
+            <InvoiceNumber className="col-span-6" />
+            <Sender className="col-span-6" />
+            <Recipient className="col-span-6" />
+            <InvoiceTerms className="col-span-12" />
+            <Separator className="col-span-12" />
+            <InvoiceItemsTable />
+            <div className="col-span-12">
+              total aqui, taxa, discount, freight
+            </div>
+            <Notes className="col-span-12" />
           </div>
-          {/* Invoice Number */}
-          <InvoiceNumber className="col-span-6" />
-          <Sender className="col-span-6" />
-          <Recipient className="col-span-6" />
-          <InvoiceTerms className="col-span-12" />
-          <Separator className="col-span-12" />
-          <InvoiceItemsTable />
-          <Notes className="col-span-12" />
-        </Card>
-        <div
-          className="gap-2 space-y-2 max-w-xs rounded-xl flex flex-col h-fit  sticky top-8 self-start md:hidden lg:flex"
-          aria-label="form actions"
-        >
-          <InvoicePreferences />
-
-          <InvoiceActions />
+          <div
+            className="gap-4 max-w-xs min-w-xs flex flex-col sticky top-8 self-start md:hidden lg:flex"
+            aria-label="form actions"
+          >
+            <InvoicePreferences />
+            <InvoiceActions />
+          </div>
         </div>
       </form>
     </InvoiceFormProvider>
