@@ -3,7 +3,7 @@
 import { LogoUpload } from "components/logo-upload";
 import { Button } from "components/ui/button";
 import { Card, CardContent } from "components/ui/card";
-import { Download, Eye, Send } from "lucide-react";
+import { Download, Eye, Rocket, Send } from "lucide-react";
 import { InvoiceTerms } from "./invoice-terms";
 
 import { Separator } from "components/ui/separator";
@@ -93,31 +93,34 @@ export const InvoiceForm = () => {
 
   return (
     <InvoiceFormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-2">
-        <div className="flex w-full gap-4 rounded-xl ">
-          <div
-            className="grid grid-cols-12 gap-6 flex-1 border rounded-xl p-4 bg-card"
-            aria-label="invoice form"
-          >
-            <LogoUpload />
-            <InvoiceNumber className="col-span-6" />
-            <Sender className="col-span-6" />
-            <Recipient className="col-span-6" />
-            <InvoiceTerms className="col-span-12" />
-            <Separator className="col-span-12" />
-            <InvoiceItemsTable />
-            <div className="col-span-12">
-              total aqui, taxa, discount, freight
-            </div>
-            <Notes className="col-span-12" />
-          </div>
-          <div
-            className="gap-4 max-w-xs min-w-xs flex flex-col sticky top-8 self-start md:hidden lg:flex"
-            aria-label="form actions"
-          >
-            <InvoicePreferences />
-            <InvoiceActions />
-          </div>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex w-full gap-4 rounded-xl relative"
+      >
+        <div className="bg-primary p-2 absolute -top-8 left-0 rounded-t-md text-xs pb-8 -z-10 flex items-center gap-1 text-white font-medium">
+          <Rocket size={12} />
+          Create your first invoice — it’s free!
+        </div>
+        <div
+          className="grid grid-cols-12 gap-6 flex-1 border rounded-xl p-4 bg-card border-primary"
+          aria-label="invoice form"
+        >
+          <LogoUpload />
+          <InvoiceNumber className="col-span-6" />
+          <Sender className="col-span-6" />
+          <Recipient className="col-span-6" />
+          <InvoiceTerms className="col-span-12" />
+          <Separator className="col-span-12" />
+          <InvoiceItemsTable />
+          <div className="col-span-12">total aqui, taxa, discount, freight</div>
+          <Notes className="col-span-12" />
+        </div>
+        <div
+          className="gap-4 max-w-xs min-w-xs flex flex-col sticky top-8 self-start md:hidden lg:flex"
+          aria-label="form actions"
+        >
+          <InvoicePreferences />
+          <InvoiceActions />
         </div>
       </form>
     </InvoiceFormProvider>
