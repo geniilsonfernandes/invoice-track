@@ -8,8 +8,10 @@ import { formatNumber } from '../lib/utils';
 import { GithubIcon } from './icons';
 import { Badge } from './ui/badge';
 
-const owner: string = 'gokulkrishh';
-const repo: string = 'bmrk.cc';
+//github.com/geniilsonfernandes/invoice-track
+
+const owner: string = "geniilsonfernandes";
+const repo: string = 'invoice-track';
 
 async function getStarCount(): Promise<number | null> {
   try {
@@ -36,10 +38,10 @@ export default async function GitButton() {
       className="inline-flex transition-colors items-center justify-center h-[40px] rounded-full px-4 py-2 text-sm font-medium text-slate-900 ring-1 ring-slate-900/10 bg-white hover:bg-gray-200"
       target="_blank"
       rel="noopener noreferrer"
-      href="https://github.com/gokulkrishh/bmrk.cc"
+      href="https://github.com/geniilsonfernandes/invoice-track"
     >
       <GithubIcon className="h-5 w-5 mr-2" />
-
+      Star on Github{" "}
       <Badge className="ml-2 hidden sm:inline-block  text-primary tabular-nums font-medium bg-gray-200 hover:bg-gray-200">
         {formatNumber(count as number)}
       </Badge>
