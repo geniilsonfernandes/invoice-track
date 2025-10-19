@@ -5,15 +5,14 @@ import { TrustedBy } from "components/home/trusted-by";
 import { InvoiceForm } from "features/invoices/components/invoice-form";
 import { Header } from "../components/header";
 
+//
 export default function Home() {
   return (
-    <main className="relative">
-      <div className="container pb-4 ">
-        <Header />
-        <BillingHighlights />
-        <TrustedBy />
-        <InvoiceForm />
-      </div>
+    <main className="relative container">
+      <Header />
+      <BillingHighlights />
+      <TrustedBy />
+      <InvoiceForm />
       <Features />
       <Footer />
     </main>

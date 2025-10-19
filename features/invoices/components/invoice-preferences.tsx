@@ -8,11 +8,11 @@ import {
   FieldLabel,
 } from "components/ui/field";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "components/ui/select";
 import { SlidersHorizontal } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -22,14 +22,13 @@ import {
   InvoiceKeysEnum,
 } from "../schemas/invoiceSchema";
 
-
 export const InvoicePreferences = () => {
   const { control } = useFormContext<InvoiceFormValues>();
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <SlidersHorizontal className="h-5 w-5 text-muted-foreground" />{" "}
+          <SlidersHorizontal className=" text-muted-foreground" />
           Preferences
         </CardTitle>
       </CardHeader>

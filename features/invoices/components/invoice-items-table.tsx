@@ -166,8 +166,8 @@ export function InvoiceItemsTable() {
           ))}
         </DraggableContext>
       </div>
-      <Button size="sm" variant="ghost" type="button" onClick={handleAdd}>
-        <PackagePlus /> Add an item
+      <Button size="xs" variant="default" type="button" onClick={handleAdd}>
+        <PackagePlus /> Add an Item
       </Button>
     </div>
   );

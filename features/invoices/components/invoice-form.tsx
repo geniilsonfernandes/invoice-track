@@ -3,9 +3,10 @@
 import { LogoUpload } from "components/logo-upload";
 import { Button } from "components/ui/button";
 import { Card, CardContent } from "components/ui/card";
-import { Download, Eye, Rocket, Send } from "lucide-react";
+import { Download, Eye, Plus, Rocket, Send } from "lucide-react";
 import { InvoiceTerms } from "./invoice-terms";
 
+import { StatusBadge } from "components/status-badge";
 import { Separator } from "components/ui/separator";
 import { useFormContext } from "react-hook-form";
 import { InvoiceFormProvider, useInvoiceForm } from "../hooks/use-invoice-form";
@@ -102,9 +103,13 @@ export const InvoiceForm = () => {
           Create your first invoice — it’s free!
         </div>
         <div
-          className="grid grid-cols-12 gap-6 flex-1 border rounded-xl p-4 bg-card border-primary"
+          className="grid grid-cols-12 gap-4 flex-1 border rounded-xl p-4 bg-card border-primary"
           aria-label="invoice form"
         >
+          <div className="col-span-12 flex items-center justify-between">
+            <StatusBadge status="draft" />
+          </div>
+
           <LogoUpload />
           <InvoiceNumber className="col-span-6" />
           <Sender className="col-span-6" />
@@ -112,8 +117,20 @@ export const InvoiceForm = () => {
           <InvoiceTerms className="col-span-12" />
           <Separator className="col-span-12" />
           <InvoiceItemsTable />
-          <div className="col-span-12">total aqui, taxa, discount, freight</div>
-          <Notes className="col-span-12" />
+          <Separator className="col-span-12" />
+          <div className="col-span-12 px-2">
+            <div className="flex justify-between w-full">
+              <div className="font-bold">Total</div>
+              <div className="text-muted-foreground">USD 1,200.00</div>
+            </div>
+          </div>
+          <div className="col-span-12 ">
+            <Button variant="outline" size="xs" type="button">
+              <Plus />
+              Add inclusive tax
+            </Button>
+          </div>
+          <Notes className="col-span-12 " />
         </div>
         <div
           className="gap-4 max-w-xs min-w-xs flex flex-col sticky top-8 self-start md:hidden lg:flex"
