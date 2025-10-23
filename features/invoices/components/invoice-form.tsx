@@ -6,6 +6,7 @@ import { Card, CardContent } from "components/ui/card";
 import { Download, Eye, Plus, Rocket, Send } from "lucide-react";
 import { InvoiceTerms } from "./invoice-terms";
 
+import { Preview } from "components/preview";
 import { StatusBadge } from "components/status-badge";
 import { Separator } from "components/ui/separator";
 import { useFormContext } from "react-hook-form";
@@ -19,7 +20,7 @@ import { Recipient } from "./recipient";
 import { Sender } from "./sender";
 
 const InvoiceActions = () => {
-  const { formState } = useFormContext<InvoiceFormValues>();
+  const { formState, getValues } = useFormContext<InvoiceFormValues>();
 
   const isHome = true;
 
@@ -27,22 +28,7 @@ const InvoiceActions = () => {
     return (
       <Card>
         <CardContent className="flex flex-col gap-2">
-          <Button
-            className=""
-            size="lg"
-            type="submit"
-            disabled={!formState.isValid}
-            aria-disabled={!formState.isValid}
-          >
-            <Download /> Download
-          </Button>
-
-          <div className="flex w-full gap-2 ">
-            <Button variant="secondary" className="flex-1">
-              <Eye />
-              Preview
-            </Button>
-          </div>
+          <Preview />
         </CardContent>
       </Card>
     );
