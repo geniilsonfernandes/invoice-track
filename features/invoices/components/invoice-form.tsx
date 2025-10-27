@@ -1,11 +1,11 @@
 "use client";
 
-import { LogoUpload } from "components/logo-upload";
 import { Button } from "components/ui/button";
 import { Card, CardContent } from "components/ui/card";
 import { Download, Eye, Plus, Rocket, Send } from "lucide-react";
 import { InvoiceTerms } from "./invoice-terms";
 
+import { LogoUpload } from "components/logo-upload";
 import { Preview } from "components/preview";
 import { StatusBadge } from "components/status-badge";
 import { Separator } from "components/ui/separator";
@@ -14,7 +14,6 @@ import { InvoiceFormProvider, useInvoiceForm } from "../hooks/use-invoice-form";
 import { Invoice as InvoiceFormValues } from "../schemas/invoiceSchema";
 import { InvoiceItemsTable } from "./invoice-items-table";
 import { InvoiceNumber } from "./invoice-number";
-import { InvoicePreferences } from "./invoice-preferences";
 import { Notes } from "./notes";
 import { Recipient } from "./recipient";
 import { Sender } from "./sender";
@@ -68,6 +67,13 @@ const InvoiceActions = () => {
 
 // criar hook para agrupar funcionalidades e tipos do form de invoice
 
+const Tag = ({ label }: { label?: string }) => (
+  <div className="bg-primary p-2 absolute -top-8 left-0 rounded-t-md text-xs pb-8 -z-10 flex items-center gap-1 text-white font-medium ">
+    <Rocket size={12} />
+    {label}
+  </div>
+);
+
 export const InvoiceForm = () => {
   const methods = useInvoiceForm();
 
@@ -82,22 +88,18 @@ export const InvoiceForm = () => {
     <InvoiceFormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="flex w-full gap-4 rounded-xl relative"
+        className="gap-2 flex-1 mx-auto relative"
+        aria-label="invoice form"
       >
-        <div className="bg-primary p-2 absolute -top-8 left-0 rounded-t-md text-xs pb-8 -z-10 flex items-center gap-1 text-white font-medium">
-          <Rocket size={12} />
-          Create your first invoice — it’s free!
-        </div>
-        <div
-          className="grid grid-cols-12 gap-4 flex-1 border rounded-xl p-4 bg-card border-primary"
-          aria-label="invoice form"
-        >
-          <div className="col-span-12 flex items-center justify-between">
-            <StatusBadge status="draft" />
-          </div>
+        <div className="grid gap-4 grid-cols-12 max-w-6xl rounded-xl p-4 bg-card border border-primary">
+          <Tag label="Create your first proposals — it’s free!" />
 
+          <StatusBadge
+            status="draft"
+            className="col-span-12 flex items-center justify-between"
+          />
           <LogoUpload />
-          <InvoiceNumber className="col-span-6" />
+          <InvoiceNumber className="col-span-6 col-start-7 self-end" />
           <Sender className="col-span-6" />
           <Recipient className="col-span-6" />
           <InvoiceTerms className="col-span-12" />
@@ -117,13 +119,6 @@ export const InvoiceForm = () => {
             </Button>
           </div>
           <Notes className="col-span-12 " />
-        </div>
-        <div
-          className="gap-4 max-w-xs min-w-xs flex flex-col sticky top-8 self-start md:hidden lg:flex"
-          aria-label="form actions"
-        >
-          <InvoicePreferences />
-          <InvoiceActions />
         </div>
       </form>
     </InvoiceFormProvider>

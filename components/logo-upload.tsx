@@ -153,15 +153,11 @@ const UploadDialog: React.FC<DialogProps> = ({ children }) => {
 
 export const LogoUpload = () => {
   return (
-    <div className=" col-span-6">
-      <UploadDialog>
-        <div className="w-40">
-          <div className="h-24 w-full border-2 gap-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer hover:border-primary/50 hover:bg-primary/10 transition-colors text-muted-foreground">
-            <ImageUp className="size-4" />
-            <p className="text-sm font-bold ">Upload Logo</p>
-          </div>
-        </div>
-      </UploadDialog>
+    <div className="col-span-4">
+      <div className="h-24 w-full border-2 gap-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer hover:border-primary/50 hover:bg-primary/10 transition-colors text-muted-foreground">
+        <ImageUp className="size-4" />
+        <p className="text-sm font-bold ">Upload Logo</p>
+      </div>
     </div>
   );
 };

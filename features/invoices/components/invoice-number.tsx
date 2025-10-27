@@ -35,49 +35,42 @@ export const InvoiceNumber: React.FC<InvoiceNumberProps> = (props) => {
       control={control}
       name={InvoiceKeysEnum.InvoiceNumber}
       render={({ field, fieldState }) => (
-        <div {...props}>
-          <Field orientation="vertical">
-            <FieldContent>
-              <FieldLabel htmlFor="invoice-number">Invoice Number</FieldLabel>
-            </FieldContent>
+        <Field orientation="vertical" {...props}>
+          <FieldContent>
+            <FieldLabel htmlFor="invoice-number">Quoting number</FieldLabel>
+          </FieldContent>
 
-            <ButtonGroup>
-              <ButtonGroupText asChild>
-                <Label>INV</Label>
-              </ButtonGroupText>
-              <InputGroup>
-                <InputGroupInput
-                  id="invoice-number"
-                  placeholder="Invoice #"
-                  {...field}
-                  aria-invalid={!!fieldState.error}
-                  aria-describedby={
-                    fieldState.error ? "invoice-number-error" : undefined
-                  }
-                />
+          <ButtonGroup>
+            <ButtonGroupText asChild>
+              <Label>INV</Label>
+            </ButtonGroupText>
+            <InputGroup>
+              <InputGroupInput
+                id="invoice-number"
+                placeholder="Invoice #"
+                {...field}
+                aria-invalid={!!fieldState.error}
+                aria-describedby={
+                  fieldState.error ? "invoice-number-error" : undefined
+                }
+              />
 
-                <InputGroupAddon align="inline-end">
-                  <InputGroupButton
-                    aria-label="Copy"
-                    title="Copy"
-                    size="icon-xs"
-                    onClick={generateInvoiceNumber}
-                  >
-                    <RefreshCcw className="size-4" />
-                  </InputGroupButton>
-                </InputGroupAddon>
-              </InputGroup>
-            </ButtonGroup>
-            <p id="payment-terms-desc" className="sr-only">
-              Select the payment terms for the invoice. Choose None, Net 7, Net
-              15, Net 30, Net 60, Due on Receipt or Custom.
-            </p>
-
-            <FieldError id="invoice-number-error">
-              {fieldState.error?.message}
-            </FieldError>
-          </Field>
-        </div>
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  aria-label="Copy"
+                  title="Copy"
+                  size="icon-xs"
+                  onClick={generateInvoiceNumber}
+                >
+                  <RefreshCcw className="size-4" />
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+          </ButtonGroup>
+          <FieldError id="invoice-number-error">
+            {fieldState.error?.message}
+          </FieldError>
+        </Field>
       )}
     />
   );
