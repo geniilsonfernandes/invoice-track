@@ -18,6 +18,10 @@ export const InvoiceSchema = z
       z.object({
         name: z.string().min(1, "Item name is required"),
         quantity: z.number().min(0, "Item quantity is required"),
+        description: z
+          .string()
+          .min(1, "Item description is required")
+          .optional(),
         price: z.number().min(0, "Item price is required"),
       })
     ),

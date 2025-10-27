@@ -13,12 +13,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "Invoice Tracker | Home";
+const title = "Proposa | Home";
 const description =
-  "Invoice Tracker is a simple and efficient app to create, organize, and manage your invoices all in one place.";
+  "With Proposa, you can create, send, and track all your proposals in minutes — powered by AI to boost your conversion rate.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bmrk.cc"),
+  metadataBase: new URL("https://invoicehub.cc"),
   title,
   description,
   twitter: {

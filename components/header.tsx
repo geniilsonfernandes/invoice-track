@@ -21,9 +21,7 @@ export const Header = () => {
           className="inline-flex items-center"
         >
           <Logo className="w-10 h-10" />
-          <h1 className="text-lg font-bold ml-3 hidden sm:block">
-            Invoice Tracker
-          </h1>
+          <h1 className="text-lg font-bold ml-3 hidden sm:block">Proposa</h1>
         </Link>
       </div>
 

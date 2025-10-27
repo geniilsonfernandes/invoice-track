@@ -8,6 +8,7 @@ type StatusType = "draft" | "in-progress" | "in-review" | "completed" | "cancell
 interface StatusBadgeProps {
   status: StatusType;
   withLabel?: boolean;
+  className?: string;
 }
 
 const statusStyles: Record<StatusType, string> = {
@@ -15,7 +16,7 @@ const statusStyles: Record<StatusType, string> = {
   "in-progress": "text-orange-600 bg-orange-100 border-orange-300",
   "in-review": "text-blue-600 bg-blue-100 border-blue-300",
   completed: "text-green-600 bg-green-100 border-green-300",
-    cancelled: "text-red-600 bg-red-100 border-red-300",
+  cancelled: "text-red-600 bg-red-100 border-red-300",
 };
 
 const icons: Record<StatusType, JSX.Element> = {
@@ -23,7 +24,7 @@ const icons: Record<StatusType, JSX.Element> = {
   "in-progress": <Play className="size-4 fill-orange-500 text-white" />,
   "in-review": <Circle className="size-4 fill-blue-500 text-white" />,
   completed: <Check className="size-4 text-white bg-green-500 rounded-full" />,
-  cancelled: <BadgeX  className="size-4 text-red-500" />,
+  cancelled: <BadgeX className="size-4 text-red-500" />,
 };
 
 const labels: Record<StatusType, string> = {
@@ -34,14 +35,17 @@ const labels: Record<StatusType, string> = {
   cancelled: "Cancelled",
 };
 
-  
-
-export function StatusBadge({ status, withLabel = true }: StatusBadgeProps) {
+export function StatusBadge({
+  status,
+  withLabel = true,
+  className,
+}: StatusBadgeProps) {
   return (
     <Badge
       className={clsx(
         "inline-flex w-fit items-center gap-1.5 rounded-md border px-1 py-0.5 text-xs font-medium",
-        statusStyles[status]
+        statusStyles[status],
+        className
       )}
     >
       {icons[status]}

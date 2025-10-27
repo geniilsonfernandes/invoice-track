@@ -1,3 +1,4 @@
+import DottedGradient from "components/dotted-gradient";
 import { BillingHighlights } from "components/home/billing-highlights";
 import Features from "components/home/features";
 import Footer from "components/home/footer";
@@ -11,6 +12,7 @@ export default function Home() {
     <main className="relative container">
       <Header />
       <BillingHighlights />
+      <DottedGradient />
       <TrustedBy />
       <InvoiceForm />
       <Features />
