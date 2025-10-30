@@ -1,5 +1,6 @@
 import { Button } from "components/ui/button";
 import { ChartSpline, FileText, Rocket, Send, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export function BillingHighlights() {
   return (
@@ -34,9 +35,11 @@ export function BillingHighlights() {
         <Button size="lg">
           <Rocket /> Start for free
         </Button>
-        <Button size="lg" variant="secondary">
-          <Sparkles /> View Proposal Demo
-        </Button>
+        <Link href="/proposal" passHref>
+          <Button size="lg" variant="secondary">
+            <Sparkles /> View Proposal Demo
+          </Button>
+        </Link>
       </div>
       <p className="text-muted-foreground text-center my-2 text-xs">
         No installation required

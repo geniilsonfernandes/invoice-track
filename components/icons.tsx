@@ -89,13 +89,17 @@ export const Logo = ({ className }: { className?: string }) => (
     viewBox="0 0 22 29"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={cn("text-primary", className)}
   >
-    <path d="M14.1667 0V7.08333H7.08333V14.1667H0V0H14.1667Z" fill="#FF500F" />
+    <path
+      d="M14.1667 0V7.08333H7.08333V14.1667H0V0H14.1667Z"
+      fill="currentColor"
+    />
     <path
       d="M7.08334 21.25L7.08334 14.1667L14.1667 14.1667L14.1667 7.08334L21.25 7.08334L21.25 21.25L7.08334 21.25Z"
-      fill="#FF500F"
+      fill="currentColor"
     />
-    <rect y="21.25" width="7.08333" height="7.08333" fill="#FF500F" />
+    <rect y="21.25" width="7.08333" height="7.08333" fill="currentColor" />
   </svg>
 );
 

@@ -29,7 +29,11 @@ User input:
 
     const result = await client.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: basePrompt,
+      contents: [
+        {
+          text: basePrompt,
+        },
+      ],
     });
 
     return result.text || "No result.";
