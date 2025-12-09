@@ -149,7 +149,7 @@ export const EmptyBookmarkState = ({ className }: { className?: string }) => {
   );
 };
 
-export const EmptyFavoriteState = ({ className }: { className?: string }) => {
+export const EmptyFavoriteState = () => {
   return (
     <div className="flex flex-col h-80 justify-center items-center">
       <FavIcon className="text-primary w-10 h-10" />
@@ -239,7 +239,7 @@ export const HouseGlassIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const RateLimitState = ({ className }: { className?: string }) => {
+export const RateLimitState = () => {
   return (
     <div className="flex flex-col h-80 justify-center items-center">
       <HouseGlassIcon className="text-primary w-10 h-10" />
@@ -287,7 +287,7 @@ export const PublicShareIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const NotFoundIcon = ({ className }: { className?: string }) => {
+export const NotFoundIcon = () => {
   return (
     <div className="flex flex-col h-80 justify-center items-center">
       <h3 className="text-primary mt-3 tracking-wide text-xl font-medium">
@@ -761,7 +761,7 @@ export const RefreshIcon = ({ className }: { className?: string }) => {
   );
 };
 
-export const EmptyTagsState = ({ className }: { className?: string }) => {
+export const EmptyTagsState = () => {
   return (
     <div className="flex flex-col h-80 justify-center items-center">
       <TagsIcon className="text-primary w-10 h-10" />

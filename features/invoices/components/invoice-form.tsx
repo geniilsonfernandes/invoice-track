@@ -1,15 +1,11 @@
 "use client";
 
 import { Button } from "components/ui/button";
-import { Card, CardContent } from "components/ui/card";
-import { Download, Eye, Plus, Rocket, Send } from "lucide-react";
+import { Plus, Rocket } from "lucide-react";
 import { InvoiceTerms } from "./invoice-terms";
 
-import { LogoUpload } from "components/logo-upload";
-import { Preview } from "components/preview";
 import { StatusBadge } from "components/status-badge";
 import { Separator } from "components/ui/separator";
-import { useFormContext } from "react-hook-form";
 import { InvoiceFormProvider, useInvoiceForm } from "../hooks/use-invoice-form";
 import { Invoice as InvoiceFormValues } from "../schemas/invoiceSchema";
 import { InvoiceItemsTable } from "./invoice-items-table";
@@ -17,53 +13,6 @@ import { InvoiceNumber } from "./invoice-number";
 import { Notes } from "./notes";
 import { Recipient } from "./recipient";
 import { Sender } from "./sender";
-
-const InvoiceActions = () => {
-  const { formState, getValues } = useFormContext<InvoiceFormValues>();
-
-  const isHome = true;
-
-  if (isHome) {
-    return (
-      <Card>
-        <CardContent className="flex flex-col gap-2">
-          <Preview />
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return (
-    <Card>
-      <CardContent className="flex flex-col gap-2">
-        <Button
-          className=""
-          size="lg"
-          type="submit"
-          disabled={!formState.isValid}
-          aria-disabled={!formState.isValid}
-        >
-          <Send /> Send Invoice
-        </Button>
-
-        <div className="flex w-full gap-2 ">
-          <Button variant="secondary" className="flex-1">
-            <Eye className="mr-2 h-4 w-4" />
-            Preview
-          </Button>
-          <Button
-            variant="secondary"
-            className="flex-1"
-            disabled={!formState.isValid}
-          >
-            <Download className="mr-2 h-4 w-4" />
-            Download
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
 
 // criar hook para agrupar funcionalidades e tipos do form de invoice
 
@@ -98,7 +47,6 @@ export const InvoiceForm = () => {
             status="draft"
             className="col-span-12 flex items-center justify-between"
           />
-          <LogoUpload />
           <InvoiceNumber className="col-span-6 col-start-7 self-end" />
           <Sender className="col-span-6" />
           <Recipient className="col-span-6" />

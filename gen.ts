@@ -84,6 +84,10 @@ export const generateRecipe = async (
       },
     });
 
+    if (!response.text) {
+      return null;
+    }
+
     const jsonText = response.text.trim();
     const cleanedJsonText = jsonText
       .replace(/^```json\n?/, "")
