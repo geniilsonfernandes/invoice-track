@@ -7,4 +7,5 @@ export const publicRoutes: string[] = [
   "/privacy", // política de privacidade
   "/about", // sobre
   "/proposal", // página de propostas
+  "/game",
 ];
